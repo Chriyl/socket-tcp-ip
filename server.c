@@ -41,16 +41,24 @@ int main() {
     listen(server_sock, 5);
     printf("Listening...\n");
 
-    while (true) {
-        int addr_size = sizeof(client_addr);
-        client_sock = accept(server_sock, (struct sockaddr *) &client_addr, &addr_size);
-        printf("[+] client connected\n");
+    int addr_size = sizeof(client_addr);
+    client_sock = accept(server_sock, (struct sockaddr *) &client_addr, &addr_size);
+    printf("[+] client connected\n");
 
+
+    while (true) {
+        
         bzero(buffer, 1024);
 
         recv(client_sock, buffer, sizeof(buffer), 0);
         
         printf("client: %s \n", buffer);
+
+        if(strcmp(buffer, "exit") == 0){
+            close(server_sock);
+            printf("[+] client tcp closed connection");
+            return 0;
+        }
 
         //bzero(buffer, 1024);
         strcat(buffer, " anche a te");   
@@ -59,15 +67,16 @@ int main() {
        
         
         send(client_sock,  buffer, strlen(buffer), 0);
+        bzero(buffer, 1024);
        
 
-        close(client_sock);
+       // close(client_sock);
         
-        printf("[+] client close\n");
+        //printf("[+] client close\n");
 
-        close(server_sock); // Close the server socket when done
-        printf("[+] server close");
-        return 0;
+        //close(server_sock); // Close the server socket when done
+        //printf("[+] server close");
+        //return 0;
         
     }
 

@@ -31,23 +31,35 @@ int main() {
     connect(sock, (struct sockaddr *) &addr, sizeof(addr));
     printf("connected to the server\n");
 
-    bzero(buffer, 1024);
-    printf("inserisci un messagio: ");
-    fgets(buffer, 1024, stdin);
+    for(;;) {
+        bzero(buffer, 1024);
+        printf("inserisci un messagio: ");
+        fgets(buffer, 1024, stdin);
 
-    size_t len = strlen(buffer);
-    if (len > 0 && buffer[len - 1] == '\n') {
-        buffer[len - 1] = '\0'; // Sostituisci '\n' con '\0'
+        
+
+        size_t len = strlen(buffer);
+        if (len > 0 && buffer[len - 1] == '\n') {
+            buffer[len - 1] = '\0'; // Sostituisci '\n' con '\0'
+        }
+
+        //printf("%ld\n", send(sock, buffer, strlen(buffer), 0));
+
+        send(sock, buffer, strlen(buffer), 0);
+
+        if(strcmp(buffer, "exit") == 0) {
+            close(sock);
+            printf("[+] TCP connection closed");
+            return 0;
+        }
+
+        bzero(buffer, 1024);
+        recv(sock, buffer, sizeof(buffer), 0);
+        printf("server: %s \n", buffer);
+
     }
 
-    //printf("%ld\n", send(sock, buffer, strlen(buffer), 0));
-
-    send(sock, buffer, strlen(buffer), 0);
-
-    bzero(buffer, 1024);
-    recv(sock, buffer, sizeof(buffer), 0);
-    printf("server: %s \n", buffer);
-
+   
     close(sock);
     printf("[+] disconnected from the server\n");
 
