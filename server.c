@@ -67,6 +67,10 @@ int main(int argc, char** argv) {
         fgets(buffer, 1024, stdin);
 
        
+        size_t len = strlen(buffer);
+        if (len > 0 && buffer[len - 1] == '\n') {
+            buffer[len - 1] = '\0'; // Sostituisci '\n' con '\0'
+        }
         
         send(client_sock,  buffer, strlen(buffer), 0);
         bzero(buffer, 1024);
