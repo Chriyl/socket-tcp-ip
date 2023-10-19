@@ -61,8 +61,10 @@ int main() {
         }
 
         //bzero(buffer, 1024);
-        strcat(buffer, " anche a te");   
+        //strcat(buffer, " anche a te");   
         
+        printf("invia un messaggio: ");
+        fgets(buffer, 1024, stdin);
 
        
         
