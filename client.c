@@ -5,15 +5,15 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
-int main() {
-    char *ip = "127.0.0.1";
-    int port = 5007;
+int main(int argc, char** argv) {
+    char *ip = argv[1];
+    int port = atoi(argv[2]);
 
     int sock;
     struct sockaddr_in addr;
 
     char buffer[1024];
-    int n;
+    
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {

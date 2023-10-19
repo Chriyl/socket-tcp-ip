@@ -5,9 +5,9 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
-int main() {
-    char *ip = "127.0.0.1";
-    int port = 5007;
+int main(int argc, char** argv) {
+    char *ip = argv[1];
+    int port = atoi(argv[2]);
 
     int server_sock, client_sock;
     struct sockaddr_in server_addr, client_addr;
