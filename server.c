@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
     int server_sock, client_sock;
     struct sockaddr_in server_addr, client_addr;
 
-    char *prova = "anche a te";
+    //char *prova = "anche a te";
     char trash[1024];
     char buffer[1024];
     int n;
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
 
         recv(client_sock, buffer, sizeof(buffer), 0);
         
-        printf("client: %s \n", buffer);
+        printf("client: %s \n\n", buffer);
 
         if(strcmp(buffer, "exit") == 0){
             close(server_sock);
@@ -67,10 +67,6 @@ int main(int argc, char** argv) {
         fgets(buffer, 1024, stdin);
 
        
-        size_t len = strlen(buffer);
-        if (len > 0 && buffer[len - 1] == '\n') {
-            buffer[len - 1] = '\0'; // Sostituisci '\n' con '\0'
-        }
         
         send(client_sock,  buffer, strlen(buffer), 0);
         bzero(buffer, 1024);
